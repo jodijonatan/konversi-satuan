@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aplikasi Konversi Satu Halaman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+      /* Menambahkan scroll-padding agar konten tidak tersembunyi di bawah footer */
+      html {
+        scroll-padding-bottom: 8rem;
+      }
+      .page-section {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-[#F6F7F9] font-sans">
+    <!-- Konten Utama Halaman -->
+    <div class="container mx-auto p-8 md:p-16 pb-40">
+      <!-- Bagian Beranda (Home) -->
+      <section id="home" class="page-section">
+        <div
+          class="flex flex-col-reverse md:flex-row items-center gap-10 md:gap-20 max-w-6xl mx-auto min-h-screen"
+        >
+          <div class="text-center md:text-left md:w-1/2">
+            <h1 class="text-5xl font-extrabold text-[#333333] mb-3">
+              Website Konversi Satuan
+            </h1>
+            <p class="text-lg text-[#555555]">
+              Di website ini Anda dapat melakukan konversi satuan dengan mudah
+              dan cepat.
+            </p>
+          </div>
+          <dotlottie-wc
+            src="https://lottie.host/303dab6d-5640-4ab6-84b1-1f7cd3bf214f/on6n2zUiL8.lottie"
+            class="size-80 md:size-[350px] rounded-3xl"
+            speed="1"
+            autoplay
+            loop
+          ></dotlottie-wc>
+        </div>
+      </section>
+
+      <!-- Bagian Konverter Fisika -->
+      <section id="fisika" class="page-section hidden">
+        <div
+          class="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl p-6 md:p-10 my-10"
+        >
+          <h1
+            class="text-3xl md:text-5xl font-bold text-center text-gray-800 mb-2"
+          >
+            Konverter Satuan Fisika
+          </h1>
+          <p class="text-center text-gray-500 mb-8">
+            Ubah satuan panjang, berat, dan suhu dengan mudah.
+          </p>
+
+          <div class="flex border-b border-gray-200 mb-6">
+            <button
+              class="tab-btn flex-1 py-3 text-lg font-medium text-center text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition-colors duration-300"
+              onclick="showTab('panjang')"
+            >
+              Panjang
+            </button>
+            <button
+              class="tab-btn flex-1 py-3 text-lg font-medium text-center text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition-colors duration-300"
+              onclick="showTab('berat')"
+            >
+              Berat
+            </button>
+            <button
+              class="tab-btn flex-1 py-3 text-lg font-medium text-center text-blue-600 border-b-2 border-blue-600 transition-colors duration-300"
+              onclick="showTab('suhu')"
+            >
+              Suhu
+            </button>
+          </div>
+
+          <div id="panjang" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+              <div class="flex-1 w-full">
+                <label
+                  for="panjang-input"
+                  class="block text-gray-700 font-medium"
+                  >Nilai</label
+                >
+                <input
+                  type="number"
+                  id="panjang-input"
+                  value="1"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  oninput="convertPanjang()"
+                />
+              </div>
+              <div class="flex-1 w-full">
+                <label
+                  for="panjang-select-from"
+                  class="block text-gray-700 font-medium"
+                  >Dari</label
+                >
+                <select
+                  id="panjang-select-from"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onchange="convertPanjang()"
+                >
+                  <option value="meter">Meter</option>
+                  <option value="kilometer">Kilometer</option>
+                  <option value="sentimeter">Sentimeter</option>
+                  <option value="milimeter">Milimeter</option>
+                  <option value="inci">Inci</option>
+                  <option value="kaki">Kaki</option>
+                  <option value="mil">Mil</option>
+                </select>
+              </div>
+              <div class="flex-1 w-full">
+                <label
+                  for="panjang-select-to"
+                  class="block text-gray-700 font-medium"
+                  >Ke</label
+                >
+                <select
+                  id="panjang-select-to"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onchange="convertPanjang()"
+                >
+                  <option value="meter">Meter</option>
+                  <option value="kilometer">Kilometer</option>
+                  <option value="sentimeter">Sentimeter</option>
+                  <option value="milimeter">Milimeter</option>
+                  <option value="inci">Inci</option>
+                  <option value="kaki">Kaki</option>
+                  <option value="mil">Mil</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-8 text-center bg-gray-50 rounded-lg p-6">
+              <p class="text-gray-600 text-lg">Hasil Konversi:</p>
+              <h2
+                id="panjang-result"
+                class="text-4xl font-extrabold text-blue-600 mt-2"
+              >
+                0 meter
+              </h2>
+            </div>
+          </div>
+
+          <div id="berat" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+              <div class="flex-1 w-full">
+                <label for="berat-input" class="block text-gray-700 font-medium"
+                  >Nilai</label
+                >
+                <input
+                  type="number"
+                  id="berat-input"
+                  value="1"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  oninput="convertBerat()"
+                />
+              </div>
+              <div class="flex-1 w-full">
+                <label
+                  for="berat-select-from"
+                  class="block text-gray-700 font-medium"
+                  >Dari</label
+                >
+                <select
+                  id="berat-select-from"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onchange="convertBerat()"
+                >
+                  <option value="kilogram">Kilogram</option>
+                  <option value="gram">Gram</option>
+                  <option value="miligram">Miligram</option>
+                  <option value="ton">Ton</option>
+                  <option value="pon">Pon</option>
+                  <option value="ons">Ons</option>
+                </select>
+              </div>
+              <div class="flex-1 w-full">
+                <label
+                  for="berat-select-to"
+                  class="block text-gray-700 font-medium"
+                  >Ke</label
+                >
+                <select
+                  id="berat-select-to"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onchange="convertBerat()"
+                >
+                  <option value="kilogram">Kilogram</option>
+                  <option value="gram">Gram</option>
+                  <option value="miligram">Miligram</option>
+                  <option value="ton">Ton</option>
+                  <option value="pon">Pon</option>
+                  <option value="ons">Ons</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-8 text-center bg-gray-50 rounded-lg p-6">
+              <p class="text-gray-600 text-lg">Hasil Konversi:</p>
+              <h2
+                id="berat-result"
+                class="text-4xl font-extrabold text-blue-600 mt-2"
+              >
+                0 kilogram
+              </h2>
+            </div>
+          </div>
+
+          <div id="suhu" class="tab-content">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+              <div class="flex-1 w-full">
+                <label for="suhu-input" class="block text-gray-700 font-medium"
+                  >Nilai</label
+                >
+                <input
+                  type="number"
+                  id="suhu-input"
+                  value="0"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  oninput="convertSuhu()"
+                />
+              </div>
+              <div class="flex-1 w-full">
+                <label
+                  for="suhu-select-from"
+                  class="block text-gray-700 font-medium"
+                  >Dari</label
+                >
+                <select
+                  id="suhu-select-from"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onchange="convertSuhu()"
+                >
+                  <option value="celsius">Celsius</option>
+                  <option value="fahrenheit">Fahrenheit</option>
+                  <option value="kelvin">Kelvin</option>
+                </select>
+              </div>
+              <div class="flex-1 w-full">
+                <label
+                  for="suhu-select-to"
+                  class="block text-gray-700 font-medium"
+                  >Ke</label
+                >
+                <select
+                  id="suhu-select-to"
+                  class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onchange="convertSuhu()"
+                >
+                  <option value="celsius">Celsius</option>
+                  <option value="fahrenheit">Fahrenheit</option>
+                  <option value="kelvin">Kelvin</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-8 text-center bg-gray-50 rounded-lg p-6">
+              <p class="text-gray-600 text-lg">Hasil Konversi:</p>
+              <h2
+                id="suhu-result"
+                class="text-4xl font-extrabold text-blue-600 mt-2"
+              >
+                0 Celsius
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bagian Konverter Mata Uang -->
+      <section id="mata-uang" class="page-section hidden">
+        <div
+          class="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl p-6 md:p-10 my-10"
+        >
+          <h1
+            class="text-3xl md:text-5xl font-bold text-center text-gray-800 mb-2"
+          >
+            Konverter Mata Uang
+          </h1>
+          <p class="text-center text-gray-500 mb-8">
+            Konversi mata uang dengan nilai tukar saat ini.
+          </p>
+
+          <div class="flex flex-col md:flex-row items-center gap-6">
+            <div class="flex-1 w-full">
+              <label
+                for="currency-input"
+                class="block text-gray-700 font-medium"
+                >Nilai</label
+              >
+              <input
+                type="number"
+                id="currency-input"
+                value="1"
+                class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div class="flex-1 w-full">
+              <label
+                for="currency-select-from"
+                class="block text-gray-700 font-medium"
+                >Dari</label
+              >
+              <select
+                id="currency-select-from"
+                class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="IDR">IDR (Rupiah Indonesia)</option>
+                <option value="USD">USD (Dolar AS)</option>
+                <option value="EUR">EUR (Euro)</option>
+                <option value="JPY">JPY (Yen Jepang)</option>
+                <option value="SGD">SGD (Dolar Singapura)</option>
+              </select>
+            </div>
+            <div class="flex-1 w-full">
+              <label
+                for="currency-select-to"
+                class="block text-gray-700 font-medium"
+                >Ke</label
+              >
+              <select
+                id="currency-select-to"
+                class="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="IDR">IDR (Rupiah Indonesia)</option>
+                <option value="USD">USD (Dolar AS)</option>
+                <option value="EUR">EUR (Euro)</option>
+                <option value="JPY">JPY (Yen Jepang)</option>
+                <option value="SGD">SGD (Dolar Singapura)</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-8 text-center bg-gray-50 rounded-lg p-6">
+            <p class="text-gray-600 text-lg">Hasil Konversi:</p>
+            <h2
+              id="currency-result"
+              class="text-4xl font-extrabold text-blue-600 mt-2"
+            >
+              0 IDR
+            </h2>
+          </div>
+          <div class="mt-4 text-center text-gray-400 text-sm">
+            Catatan: Nilai tukar adalah contoh dan tidak diperbarui secara
+            real-time.
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Navigasi Bawah yang Diperbarui -->
+    <div
+      class="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-center bg-white bg-opacity-80 backdrop-blur-md rounded-full px-6 py-3 shadow-lg max-w-xs md:max-w-md transition-all duration-300 hover:shadow-xl hover:bg-opacity-90 z-50"
+    >
+      <!-- Ikon Beranda -->
+      <a
+        href="#home"
+        onclick="showPage('home')"
+        class="nav-link flex items-center justify-center text-green-500 mx-1 md:mx-2 transition-transform duration-200 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-400 rounded-full"
+      >
+        <svg
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          fill="none"
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M3 12L12 3L21 12M5 10V20C5 20.5523 5.44772 21 6 21H18C18.5523 21 19 20.5523 19 20V10M11 15H13V18H11V15Z"
+            stroke-width="2"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+      </a>
+
+      <!-- Ikon Fisika -->
+      <a
+        href="#fisika"
+        onclick="showPage('fisika')"
+        class="nav-link flex items-center justify-center text-gray-500 hover:text-blue-500 mx-1 md:mx-2 transition-all duration-200 ease-in-out hover:rotate-12 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-full"
+      >
+        <svg
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          fill="none"
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"
+            stroke-width="2"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+      </a>
+
+      <!-- Ikon Mata Uang -->
+      <a
+        href="#mata-uang"
+        onclick="showPage('mata-uang')"
+        class="nav-link flex items-center justify-center text-gray-500 hover:text-purple-500 mx-1 md:mx-2 transition-transform duration-200 ease-in-out hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-purple-400 rounded-full"
+      >
+        <svg
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          fill="none"
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            stroke-width="2"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+          ></path>
+          <path
+            d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"
+            stroke-width="2"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Skrip JavaScript untuk Fungsionalitas -->
+    <script
+      src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js"
+      type="module"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
