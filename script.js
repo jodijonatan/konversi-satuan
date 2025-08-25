@@ -223,12 +223,7 @@ function showPage(pageId) {
   // Mengatur gaya navigasi
   const navLinks = document.querySelectorAll(".nav-link");
   navLinks.forEach((link) => {
-    link.classList.remove(
-      "text-green-500",
-      "hover:text-blue-500",
-      "hover:text-purple-500",
-      "hover:text-pink-500"
-    );
+    link.classList.remove("text-green-500", "text-blue-500", "text-purple-500");
     link.classList.add("text-gray-500");
   });
 
@@ -248,7 +243,7 @@ function showPage(pageId) {
 // Menampilkan halaman beranda saat halaman dimuat
 window.onload = function () {
   showPage("home");
-  showTab("panjang"); // Menampilkan tab panjang saat konverter fisika pertama kali dimuat
+  showTab("suhu"); // Menampilkan tab suhu saat konverter fisika pertama kali dimuat
   addListeners(); // Menambahkan semua event listener
   convertMataUang(); // Lakukan konversi mata uang awal
 };
